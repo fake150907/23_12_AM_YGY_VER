@@ -1,23 +1,22 @@
-import java.time.LocalDateTime;
-
 class Article {
 	private int id;
+
 	private String title;
 	private String body;
-	private LocalDateTime regDate;
+	private String regDate;
 
-
-	public Article(int id, String title, String body, LocalDateTime regDate) {
+	public Article(int id, String regDate, String title, String body) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 		this.regDate = regDate;
 	}
-	public LocalDateTime getRegDate() {
+
+	public String getRegDate() {
 		return regDate;
 	}
-	
-	public void setRegDate(LocalDateTime regDate) {
+
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 
