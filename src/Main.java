@@ -57,13 +57,10 @@ public class Main {
 				Article foundArticle = rq.getFoundArticle();
 
 				if (foundArticle != null) {
-					for (int i = 0; i < articles.size(); i++) {
-						if (foundArticle.getId() == articles.get(i).getId()) {
-							articles.remove(i);
-							System.out.printf("%d번 게시글이 삭제되었습니다. 주인님.\n", rq.getId());
-							break;
-						}
-					}
+
+					articles.remove(rq.getFoundIndex());
+					System.out.printf("%d번 게시글이 삭제되었습니다. 주인님.\n", rq.getId());
+
 				}
 
 			} else {

@@ -3,6 +3,7 @@ import java.util.List;
 public class Rq {
 	private Article foundArticle;
 	private int id;
+	private int foundIndex = -1;
 	
 	public Rq(String cmd, List<Article> articles) {
 		String[] cmdDiv = cmd.split(" ");
@@ -18,13 +19,18 @@ public class Rq {
 			Article article = articles.get(i);
 			if (article.getId() == id) {
 				foundArticle = article;
+				foundIndex = i;
 			}
 		}
 		
-		if (foundArticle == null) {
+		if (foundIndex == -1) {
 			System.out.printf("%d번 게시글은 없습니다. 주인님.\n", id);
 			return;
 		}
+	}
+
+	public int getFoundIndex() {
+		return foundIndex;
 	}
 
 	public int getId() {
