@@ -1,5 +1,3 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -43,34 +41,29 @@ public class Main {
 				}
 
 			} else if (cmd.startsWith("article detail")) {
-				String[] cmdDiv = cmd.split(" ");
+				Rq rq = new Rq(cmd, articles);
+				Article foundArticle = rq.getFoundArticle();
 
-				int id = 0;
-
-				try {
-					id = Integer.parseInt(cmdDiv[2]);
-				} catch (Exception e) {
-					System.out.println("메뉴얼대로 움직여라 인간.");
-					continue;
-				}
-
-				Article foundArticle = null;
-				for (int i = 0; i < articles.size(); i++) {
-					Article article = articles.get(i);
-					if (article.getId() == id) {
-						foundArticle = article;
-						break;
-					}
-				}
-
-				if (foundArticle == null) {
-					System.out.printf("%d번 게시글은 없습니다. 주인님.\n", id);
-				} else {
-					System.out.printf("== article detail %d ==\n", id);
+				if (foundArticle != null) {
+					System.out.printf("== article detail %d ==\n", foundArticle.getId());
 					System.out.println("번호 : " + foundArticle.getId());
 					System.out.println("날짜 : " + foundArticle.getRegDate());
 					System.out.println("제목 : " + foundArticle.getTitle());
 					System.out.println("내용 : " + foundArticle.getBody());
+				}
+
+			} else if (cmd.startsWith("article delete")) {
+				Rq rq = new Rq(cmd, articles);
+				Article foundArticle = rq.getFoundArticle();
+
+				if (foundArticle != null) {
+					for (int i = 0; i < articles.size(); i++) {
+						if (foundArticle.getId() == articles.get(i).getId()) {
+							articles.remove(i);
+							System.out.printf("%d번 게시글이 삭제되었습니다. 주인님.\n", rq.getId());
+							break;
+						}
+					}
 				}
 
 			} else {
