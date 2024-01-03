@@ -1,4 +1,5 @@
-class Article {
+package com.KoreaIT.java.AM.dto;
+public class Article {
 	private int id;
 	private String regDate;
 	private String updateDate;

@@ -1,4 +1,7 @@
+package com.KoreaIT.java.AM.util;
 import java.util.List;
+
+import com.KoreaIT.java.AM.dto.Article;
 
 public class Rq {
 	private Article foundArticle;
