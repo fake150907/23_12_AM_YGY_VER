@@ -12,11 +12,14 @@ public class MemberController extends Controller {
 	private Scanner sc;
 	private String cmd;
 	private String actionMethodName;
-	private Member loginedMember = null;
 
 	public MemberController(Scanner sc) {
 		this.members = new ArrayList<>();
 		this.sc = sc;
+	}
+
+	public MemberController() {
+
 	}
 
 	private int lastMemberId = 3;
@@ -30,9 +33,17 @@ public class MemberController extends Controller {
 			doJoin();
 			break;
 		case "login":
+			if (isLogined()) {
+				System.out.println("이미 로그인 상태입니다. 주인님.");
+				return;
+			}
 			doLogin();
 			break;
 		case "logout":
+			if (!isLogined()) {
+				System.out.println("이미 로그아웃 상태입니다. 주인님");
+				return;
+			}
 			doLogout();
 			break;
 		default:
@@ -42,46 +53,33 @@ public class MemberController extends Controller {
 	}
 
 	private void doLogout() {
-		if (!isLogined()) {
-			System.out.println("이미 로그아웃 상태입니다. 주인님");
-		}
 
 		loginedMember = null;
 
 		System.out.println("로그아웃되었습니다. 주인님.");
 	}
 
-	private boolean isLogined() {
-		return loginedMember != null;
-	}
-
 	private void doLogin() {
-		if (isLogined()) {
-			System.out.println("이미 로그인 상태입니다. 주인님.");
+		System.out.println("== 로그인 ==");
+		System.out.print("login id : ");
+		String loginId = sc.nextLine().trim();
+		System.out.print("login pw : ");
+		String loginPw = sc.nextLine().trim();
+		Member member = getMemberByLoginId(loginId);
+
+		if (member == null) {
+			System.out.println("일치하는 회원이 없습니다. 다시 입력해주세요. 주인님.");
 			return;
 		}
-		System.out.println("== 로그인 ==");
-		while (true) {
-			System.out.print("login id : ");
-			String loginId = sc.nextLine().trim();
-			System.out.print("login pw : ");
-			String loginPw = sc.nextLine().trim();
-			Member member = getMemberByLoginId(loginId);
 
-			if (member == null) {
-				System.out.println("일치하는 회원이 없습니다. 다시 입력해주세요. 주인님.");
-				continue;
-			}
-
-			if (member.getLoginPw().equals(loginPw) == false) {
-				System.out.println("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
-				continue;
-			}
-
-			loginedMember = member;
-
-			System.out.printf("로그인 성공! %s님 반갑습니다.\n", member.getName());
+		if (member.getLoginPw().equals(loginPw) == false) {
+			System.out.println("비밀번호가 일치하지 않습니다. 다시 입력해주세요.");
+			return;
 		}
+
+		this.loginedMember = member;
+
+		System.out.printf("로그인 성공! %s님 반갑습니다.\n", loginedMember.getName());
 
 	}
 
@@ -138,6 +136,10 @@ public class MemberController extends Controller {
 		}
 
 		return true;
+	}
+
+	public List<Member> getTestMemberData() {
+		return members;
 	}
 
 	public void makeTestMemberData() {

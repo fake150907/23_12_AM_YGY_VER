@@ -21,7 +21,8 @@ public class App {
 		MemberController memberController = new MemberController(sc);
 		ArticleController articleController = new ArticleController(sc);
 
-		articleController.makeTestData();
+		articleController.makeTestArticleData();
+		memberController.makeTestMemberData();
 
 		while (true) {
 			System.out.print("명령어 > ");
@@ -32,6 +33,7 @@ public class App {
 				continue;
 			}
 			if (cmd.equals("exit")) {
+				System.out.println("== 프로그램을 종료합니다. == ");
 				break;
 			}
 			String[] cmdBits = cmd.split(" ");
@@ -56,8 +58,6 @@ public class App {
 
 			controller.doAction(actionMethodName, cmd);
 		}
-
-		System.out.println("== 프로그램 끝 == ");
 
 		sc.close();
 

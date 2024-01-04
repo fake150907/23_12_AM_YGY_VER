@@ -1,22 +1,28 @@
 package com.KoreaIT.java.AM.dto;
-public class Article extends Dto{
+
+public class Article extends Dto {
+
 	private String updateDate;
+	private Member writer;
+
 	private String title;
 	private String body;
 
 	private int hit;
 
-	public Article(int id, String regDate, String updateDate, String title, String body) {
-		this(id, regDate, updateDate, title, body, 0);
+	public Article(int id, String regDate, String updateDate, String title, String body, Member writer) {
+		this(id, regDate, updateDate, title, body, 0, writer);
+		this.writer = writer;
 	}
 
-	public Article(int id, String regDate, String updateDate, String title, String body, int hit) {
+	public Article(int id, String regDate, String updateDate, String title, String body, int hit, Member writer) {
 		this.id = id;
 		this.regDate = regDate;
 		this.updateDate = updateDate;
 		this.title = title;
 		this.body = body;
 		this.hit = hit;
+		this.writer = writer;
 	}
 
 	public int getId() {
@@ -65,5 +71,13 @@ public class Article extends Dto{
 
 	public void setHit(int hit) {
 		this.hit = hit;
+	}
+
+	public Member getWriter() {
+		return writer;
+	}
+
+	public void setWriter(Member writer) {
+		this.writer = writer;
 	}
 }
